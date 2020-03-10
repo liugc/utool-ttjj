@@ -1,0 +1,23 @@
+{
+  "pluginName": "jj",
+  "description": "first",
+  "preload": "preload.js",
+  "version": "0.0.1",
+  "logo": "logo.png",
+  "author": "刘国成",
+  "homepage": "https://github.com/liugc/utools-ttjj",
+  "features": [
+    {
+      "code": "list",
+      "explain": "查看基金",
+      "icon": "res/view.png",
+      "cmds": ["jj", "基金"]
+    },
+    {
+      "code": "add",
+      "explain": "添加基金",
+      "icon": "res/add.png",
+      "cmds": ["jja", "添加基金"]
+    }
+  ]
+}
