@@ -13,7 +13,7 @@ const getFund = (code) => {
         let description = "";
         let icon = "";
         const reg1 = /<div class="fundDetail-tit"><div style="float: left">(.+?)<span>\(<\/span><span class="ui-num">(.+?)<\/span><\/div>\)<\/div>/;
-        const reg2 = /<span class="ui-font-middle ui-color-red ui-num" id="gz_gszzl">(.+?)<\/span>/;
+        const reg2 = /<span class="ui-font-middle.+?ui-num" id="gz_gszzl">(.+?)<\/span>/;
         let matches1 = rawData.match(reg1);
         if (matches1 && matches1.length > 1) {
           title = matches1[1] + "(" + matches1[2] + ")";
@@ -46,7 +46,7 @@ const getFund = (code) => {
 }
 
 const getList = (callbackSetList) => {
-  let jj = utools.db.get("jj");
+  let jj = utools.db.get('jj');
   let promiseArr = [];
   if (jj) {
     jj.data.forEach((item) => {
@@ -85,19 +85,16 @@ window.exports = {
         filterList(searchWord, callbackSetList);
       },
       select: (action, itemData) => {
-        utools.hideMainWindow()
-        const url = itemData.url
-        require('electron').shell.openExternal(url)
-        utools.outPlugin()
+        utools.hideMainWindow();
+        const url = itemData.url;
+        require('electron').shell.openExternal(url);
+        utools.outPlugin();
       }
     }
   },
   "add": {
     mode: "list",
     args: {
-      enter: (action, callbackSetList) => {
-        // utools.db.remove("jj");
-      },
       search: (action, searchWord, callbackSetList) => {
         if (searchWord) {
           getListFromCode(callbackSetList, searchWord);
@@ -107,7 +104,7 @@ window.exports = {
         utools.hideMainWindow()
         let obj = {};
         obj._id = 'jj';
-        let jj = utools.db.get("jj");
+        let jj = utools.db.get('jj');
         if (jj) {
           if (!jj.data.includes(itemData.code)) {
             jj.data.push(itemData.code);
@@ -120,7 +117,34 @@ window.exports = {
         utools.db.put(obj);
         utools.outPlugin();
       },
-      placeholder: "请输入代码"
+      placeholder: "请输入基金代码"
+    }
+  },
+  "del": {
+    mode: "list",
+    args: {
+      enter: (action, callbackSetList) => {
+        getList(callbackSetList);
+      },
+      search: (action, searchWord, callbackSetList) => {
+        filterList(searchWord, callbackSetList);
+      },
+      select: (action, itemData) => {
+        utools.hideMainWindow();
+        let jj = utools.db.get('jj');
+        let index = jj.data.indexOf(itemData.code);
+        if (index > -1) {
+          let obj = {
+            _id: 'jj',
+            _rev: jj._rev
+          };
+          jj.data.splice(index, 1);
+          obj.data = jj.data;
+          utools.db.put(obj);
+        }
+        utools.outPlugin();
+      },
+      placeholder: "请输入要删除的基金"
     }
   }
 }

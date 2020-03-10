@@ -18,6 +18,12 @@
       "explain": "添加基金",
       "icon": "res/add.png",
       "cmds": ["jja", "添加基金"]
+    },
+    {
+      "code": "del",
+      "explain": "删除基金",
+      "icon": "res/del.png",
+      "cmds": ["jjd", "删除基金"]
     }
   ]
 }
