@@ -1,5 +1,7 @@
 const http = require("http");
 
+let lists = [];
+
 const getFund = (code) => {
   return new Promise((resolve, reject) => {
     let url = `http://fund.eastmoney.com/${code}.html`;
@@ -52,6 +54,7 @@ const getList = (callbackSetList) => {
     });
   }
   Promise.all(promiseArr).then((data) => {
+    lists = data;
     callbackSetList(data);
   }).catch(() => {
   });;

@@ -1,6 +1,6 @@
 {
   "pluginName": "jj",
-  "description": "first",
+  "description": "基金小工具",
   "preload": "preload.js",
   "version": "0.0.1",
   "logo": "logo.png",
